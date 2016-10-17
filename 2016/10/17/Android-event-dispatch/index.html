@@ -1,92 +1,175 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Android时间分发（PPT版） | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="- 事件是什么电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android时间分发（PPT版）">
-<meta property="og:url" content="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="- 事件是什么电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）">
-<meta property="og:updated_time" content="2016-10-17T15:33:24.410Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android时间分发（PPT版）">
-<meta name="twitter:description" content="- 事件是什么电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
+<html lang="en">
 
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="随便聊聊,聊聊生活，聊聊技术">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="UU&#39;F.超" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android时间分发（PPT版）｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xinyujauchou.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-Android-event-dispatch" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/17/Android-event-dispatch/" class="article-date">
-  <time datetime="2016-10-17T13:30:43.000Z" itemprop="datePublished">2016-10-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Android时间分发（PPT版）
-    </h1>
-  
+<style>
 
-      </header>
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    UU&#39;F.超
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="事件是什么"><a href="#事件是什么" class="headerlink" title="- 事件是什么"></a>- 事件是什么</h2><p>电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）</p>
-<p>事件由底层驱动感知,交给窗口视图处理,我们就从此开始分析事件的流转、处理，触发一系列的滑动、滚动、点击、长按等, <strong>可以说无事件不交互</strong><br> <!-- 详情请点击查看 --> </p>
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android时间分发（PPT版）</h1>
+                    
+                    <span class="meta">
+                         作者 Chandler
+                        <span>
+                          日期 2016-10-17
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#android  event"
+                           title="android  event">android  event</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android时间分发（PPT版）
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="事件是什么"><a href="#事件是什么" class="headerlink" title="- 事件是什么"></a>- 事件是什么</h2><p>电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）</p>
+<p>事件由底层驱动感知,交给窗口视图处理,我们就从此开始分析事件的流转、处理，触发一系列的滑动、滚动、点击、长按等, <strong>可以说无事件不交互</strong><br> <a id="more"></a> </p>
 <p><strong>存在形式：</strong>Android中的事件被封装成 MotionEvent对象。(这里只考虑单点触控)</p>
 <p> MotionEvent组成：1.动作码: </p>
 <pre><code>(1). ACTION_DOWN: 表示用户开始触摸;`                      
@@ -98,7 +181,7 @@
 (2)触摸点的数量（多点触控的时候用到）
 (3)动作发起的时间
 </code></pre><p>事件序列：<code>down-&gt;(move)-&gt;up/cancel</code> 一则事件的消失 意味着 某个View对它进行了消耗。<br>而并不是所有View都有消耗事件的权利，他们遵从着既定的规则，而无法消耗事件则意味着无法与用户进行手势互动。</p>
-<p>如何消耗事件？ 在回答这个问题之前，我们来做个试验：<br>这里我们为一个TextView注册一个<strong>onTouchListener</strong>事件和<strong>onClick</strong>事件:</p>
+<h2 id="View层面解析"><a href="#View层面解析" class="headerlink" title="- View层面解析"></a>- View层面解析</h2><p>如何消耗事件？ 在回答这个问题之前，我们来做个试验：<br>这里我们为一个TextView注册一个<strong>onTouchListener</strong>事件和<strong>onClick</strong>事件:</p>
 <blockquote>
 <pre><code>mTextView.setOnTouchListener(new View.OnTouchListener() {
   @Override
@@ -124,130 +207,163 @@ if (!result &amp;&amp; onTouchEvent(event)) {
        result = true;
    }
  return result;
-</code></pre><h4 id="li中存储了设置的一系列回调事件"><a href="#li中存储了设置的一系列回调事件" class="headerlink" title="li中存储了设置的一系列回调事件,"></a>li中存储了设置的一系列回调事件,</h4><p>例如<code>onTouchListener、onClickLis</code>等<br>(这里假设控件可点击),我们看到result的返回值是优先判断<code>onTouchLis</code>的,这样导致<code>onTouchEvent()</code>不被触发,因此就不存在点击事件的捕获。</p>
-<p>ViewGroup作为View的子类,其内部对View的dispatchTouchEvent(MotionEvent e)进行了覆写，处理逻辑相当多，viewGroup作为容器类，比View多出一个<strong>onInterceptTouchEvent()</strong>方法,该方法是用来拦截子View事件的,不过默认是不拦截的,为什么会有这个方法?可以想象一下：<br>如果一个滚动事件,ScrollView具有滚动需求,而其子View不需要,ScrollView必然要对此事件进行拦截,因为事件处理遵循:<strong>自上而下分发,自上而下处理的原则</strong>  。</p>
+</code></pre><p><strong>li中存储了设置的一系列回调事件</strong>,例如<code>onTouchListener、onClickLis</code>等<br>(这里假设控件可点击),我们看到result的返回值是优先判断<code>onTouchLis</code>的,这样导致<code>onTouchEvent()</code>不被触发,因此就不存在点击事件的捕获。</p>
+<h2 id="ViewGroup层面解析"><a href="#ViewGroup层面解析" class="headerlink" title="- ViewGroup层面解析"></a>- ViewGroup层面解析</h2><p>ViewGroup作为View的子类,其内部对View的dispatchTouchEvent(MotionEvent e)进行了覆写，处理逻辑相当多，viewGroup作为容器类，比View多出一个<strong>onInterceptTouchEvent()</strong>方法,该方法是用来拦截子View事件的,不过默认是不拦截的,为什么会有这个方法?可以想象一下：<br>如果一个滚动事件,ScrollView具有滚动需求,而其子View不需要,ScrollView必然要对此事件进行拦截,因为事件处理遵循:<strong>自上而下分发,自上而下处理的原则</strong>  。</p>
 <p><code>onInterceptTouchEvent就是用来打破这个原则</code>,让父容器不去优先判断字View是否需要处理这个事件，而优先交给自己处理。<br>不过,默认情况下，父容器是不会拦截，而是遍历子View，找出第一个能消耗这个事件的子View，而判断的依据就是 上一页我们说的 dispatchTouchEvent(MotionEvent e)的返回值。 而一旦这个事件序列交给子View处理,后续事件码就不会再去遍历找出消耗时间的子View。<br>另外一种情况需要了解一下： 一旦父容器通过onInterceptTouchEvent()拦截了子View的时间(可以在任意事件码进行拦截)，后续同样也不会再遍历子View 甚至 也不会再判断onInterceptTouchEvent()返回值, 我把它称为<strong>拦截失效</strong>。</p>
 <p><strong>拦截失效导致的问题：无法再从父view夺回事件的处理权。</strong></p>
 <p><strong>解决方案：事件链破坏/事件链伪造</strong></p>
-<p>既然无法重新夺回处理权，只能从头再来，而从头再来的方法就是重新创建事件链。<br><strong>dispatchTouchEvent(MotionEvent e)</strong>出场，它是所有事件派发的必经之地，伪造事件：<strong>ev.setAction(MotionEvent.EVENT_DOWN)</strong>;这样，<strong>intercepterTouchEvent()</strong>会被重新调用，重新寻找处理事件的句柄。具体实践可参考 XRefreshLayout 源码</p>
+<p>既然无法重新夺回处理权，只能从头再来，而从头再来的方法就是重新创建事件链。<br><strong>dispatchTouchEvent(MotionEvent e)</strong>出场，它是所有事件派发的必经之地，伪造事件：<strong>ev.setAction(MotionEvent.EVENT_DOWN)</strong>;这样，<strong>intercepterTouchEvent()</strong>会被重新调用，重新寻找处理事件的句柄。具体实践可参考 XRefreshLayout 源码<br><a href="https://github.com/xinyujauchou/XRefreshLayout" title="XRefreshLayout" target="_blank" rel="external">https://github.com/xinyujauchou/XRefreshLayout</a></p>
 <p><strong>CoordinateLayout</strong>,     <strong>NestedScrollView</strong>,     <strong>RecyclerView</strong></p>
 <p><strong>activity 是如何接收到事件的？</strong></p>
 
-      
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/10/17/hello-world/" data-toggle="tooltip" data-placement="top"
+                           title="Hello World">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件是什么"><span class="toc-text">- 事件是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View层面解析"><span class="toc-text">- View层面解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ViewGroup层面解析"><span class="toc-text">- ViewGroup层面解析</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
     </div>
-    <footer class="article-footer">
-      <a data-url="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/" data-id="ciue81ued0001wgo1b7p7a6lb" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-event/">android  event</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/10/17/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-event/">android  event</a></li></ul>
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; UU&#39;F.超 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
     </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/android-event/" style="font-size: 10px;">android  event</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2016/10/17/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/17/Android-event-dispatch/">Android时间分发（PPT版）</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2016 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
 </footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://xinyujauchou.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+<!-- Baidu Tongji -->
 
 
-<script src="/js/script.js"></script>
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  </div>
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="undefined">
 </body>
+
 </html>
