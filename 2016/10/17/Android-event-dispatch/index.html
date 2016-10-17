@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="- 事件是什么电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）">
-<meta property="og:updated_time" content="2016-10-17T14:59:18.307Z">
+<meta property="og:updated_time" content="2016-10-17T15:33:24.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android时间分发（PPT版）">
 <meta name="twitter:description" content="- 事件是什么电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）">
@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xinyujauchou.github.io"></form>
@@ -86,7 +86,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="事件是什么"><a href="#事件是什么" class="headerlink" title="- 事件是什么"></a>- 事件是什么</h2><p>电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）</p>
-<p>事件由底层驱动感知,交给窗口视图处理,我们就从此开始分析事件的流转、处理，触发一系列的滑动、滚动、点击、长按等, <strong>可以说无事件不交互</strong><br> <a id="more"></a> </p>
+<p>事件由底层驱动感知,交给窗口视图处理,我们就从此开始分析事件的流转、处理，触发一系列的滑动、滚动、点击、长按等, <strong>可以说无事件不交互</strong><br> <!-- 详情请点击查看 --> </p>
 <p><strong>存在形式：</strong>Android中的事件被封装成 MotionEvent对象。(这里只考虑单点触控)</p>
 <p> MotionEvent组成：1.动作码: </p>
 <pre><code>(1). ACTION_DOWN: 表示用户开始触摸;`                      
@@ -136,7 +136,7 @@ if (!result &amp;&amp; onTouchEvent(event)) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/" data-id="ciue6sye50001zoo1eepxcpnh" class="article-share-link">Share</a>
+      <a data-url="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/" data-id="ciue81ued0001wgo1b7p7a6lb" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-event/">android  event</a></li></ul>
@@ -148,7 +148,7 @@ if (!result &amp;&amp; onTouchEvent(event)) {
 <nav id="article-nav">
   
     <a href="/2016/10/17/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Récent</strong>
       <div class="article-nav-title">
         
           Hello World
@@ -171,7 +171,7 @@ if (!result &amp;&amp; onTouchEvent(event)) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-event/">android  event</a></li></ul>
     </div>
@@ -181,7 +181,7 @@ if (!result &amp;&amp; onTouchEvent(event)) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/android-event/" style="font-size: 10px;">android  event</a>
     </div>
@@ -200,7 +200,7 @@ if (!result &amp;&amp; onTouchEvent(event)) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -225,7 +225,7 @@ if (!result &amp;&amp; onTouchEvent(event)) {
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

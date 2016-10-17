@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xinyujauchou.github.io"></form>
@@ -85,6 +85,7 @@
       
         <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+ <!-- xinyujaychou first blog --> 
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
@@ -96,7 +97,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xinyujauchou.github.io/2016/10/17/hello-world/" data-id="ciue6sydx0000zoo1v4zfjezo" class="article-share-link">Share</a>
+      <a data-url="https://xinyujauchou.github.io/2016/10/17/hello-world/" data-id="ciue81ue80000wgo1wpaalaj5" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -129,16 +130,57 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="事件是什么"><a href="#事件是什么" class="headerlink" title="- 事件是什么"></a>- 事件是什么</h2><p>电容式触摸屏不依靠手指按力创造、改变电压值来检测坐标的。电容屏通过任何持有电荷的物体包括人体皮肤工作。（人体所带的电荷）电容式触摸屏是由诸如合金或是銦錫氧化物（ITO）这样的材料构成，电荷存储在一根根比头发还要细的微型静电网中。当手指点击屏幕，会从接触点吸收小量电流，造成角落电极的压降，利用感应人体微弱电流的方式来达到触控的目的。（这是为什么当你带上手套触摸屏幕时，没有反应的原因）</p>
-<p>事件由底层驱动感知,交给窗口视图处理,我们就从此开始分析事件的流转、处理，触发一系列的滑动、滚动、点击、长按等, <strong>可以说无事件不交互</strong><br>
-        
-          <p class="article-more-link">
-            <a href="/2016/10/17/Android-event-dispatch/#more">Read More</a>
-          </p>
-        
+<p>事件由底层驱动感知,交给窗口视图处理,我们就从此开始分析事件的流转、处理，触发一系列的滑动、滚动、点击、长按等, <strong>可以说无事件不交互</strong><br> <!-- 详情请点击查看 --> </p>
+<p><strong>存在形式：</strong>Android中的事件被封装成 MotionEvent对象。(这里只考虑单点触控)</p>
+<p> MotionEvent组成：1.动作码: </p>
+<pre><code>(1). ACTION_DOWN: 表示用户开始触摸;`                      
+(2). ACTION_MOVE: 表示用户在移动(手指或者其他);                          
+(3). ACTION_UP:表示用户抬起了手指 ;              
+(4). ACTION_CANCEL:表示手势被取消了;
+</code></pre><p>2.元数据：</p>
+<pre><code>(1)动作发起的坐标 
+(2)触摸点的数量（多点触控的时候用到）
+(3)动作发起的时间
+</code></pre><p>事件序列：<code>down-&gt;(move)-&gt;up/cancel</code> 一则事件的消失 意味着 某个View对它进行了消耗。<br>而并不是所有View都有消耗事件的权利，他们遵从着既定的规则，而无法消耗事件则意味着无法与用户进行手势互动。</p>
+<p>如何消耗事件？ 在回答这个问题之前，我们来做个试验：<br>这里我们为一个TextView注册一个<strong>onTouchListener</strong>事件和<strong>onClick</strong>事件:</p>
+<blockquote>
+<pre><code>mTextView.setOnTouchListener(new View.OnTouchListener() {
+  @Override
+        public boolean onTouch(View v, MotionEvent event) {
+return true;
+        }
+    });
+    mTextView.setOnClickListener(new View.OnClickListener() {
+  @Override
+        public void onClick(View v) {}
+    });
+</code></pre></blockquote>
+<p>结果，<strong>onClickListener没触发</strong>，有人说，事件被拦截了，准确得说，事件被消耗了，如果我们把onTouchListener中的返回值改写为false，两者均能正常触发，这究竟是怎样一种机制<strong>？</strong></p>
+<p>先普及一个概念：事件的流转、消耗、拦截是必然要经过View的<code>dispatchTouchEvent(MotionEvent e)</code>的.我们看下View中此方法的关键代码：</p>
+<pre><code>ListenerInfo li = mListenerInfo;
+
+if (li != null &amp;&amp; li.mOnTouchListener != null
+        &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
+           &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {
+           result = true;
+   }
+if (!result &amp;&amp; onTouchEvent(event)) {
+       result = true;
+   }
+ return result;
+</code></pre><h4 id="li中存储了设置的一系列回调事件"><a href="#li中存储了设置的一系列回调事件" class="headerlink" title="li中存储了设置的一系列回调事件,"></a>li中存储了设置的一系列回调事件,</h4><p>例如<code>onTouchListener、onClickLis</code>等<br>(这里假设控件可点击),我们看到result的返回值是优先判断<code>onTouchLis</code>的,这样导致<code>onTouchEvent()</code>不被触发,因此就不存在点击事件的捕获。</p>
+<p>ViewGroup作为View的子类,其内部对View的dispatchTouchEvent(MotionEvent e)进行了覆写，处理逻辑相当多，viewGroup作为容器类，比View多出一个<strong>onInterceptTouchEvent()</strong>方法,该方法是用来拦截子View事件的,不过默认是不拦截的,为什么会有这个方法?可以想象一下：<br>如果一个滚动事件,ScrollView具有滚动需求,而其子View不需要,ScrollView必然要对此事件进行拦截,因为事件处理遵循:<strong>自上而下分发,自上而下处理的原则</strong>  。</p>
+<p><code>onInterceptTouchEvent就是用来打破这个原则</code>,让父容器不去优先判断字View是否需要处理这个事件，而优先交给自己处理。<br>不过,默认情况下，父容器是不会拦截，而是遍历子View，找出第一个能消耗这个事件的子View，而判断的依据就是 上一页我们说的 dispatchTouchEvent(MotionEvent e)的返回值。 而一旦这个事件序列交给子View处理,后续事件码就不会再去遍历找出消耗时间的子View。<br>另外一种情况需要了解一下： 一旦父容器通过onInterceptTouchEvent()拦截了子View的时间(可以在任意事件码进行拦截)，后续同样也不会再遍历子View 甚至 也不会再判断onInterceptTouchEvent()返回值, 我把它称为<strong>拦截失效</strong>。</p>
+<p><strong>拦截失效导致的问题：无法再从父view夺回事件的处理权。</strong></p>
+<p><strong>解决方案：事件链破坏/事件链伪造</strong></p>
+<p>既然无法重新夺回处理权，只能从头再来，而从头再来的方法就是重新创建事件链。<br><strong>dispatchTouchEvent(MotionEvent e)</strong>出场，它是所有事件派发的必经之地，伪造事件：<strong>ev.setAction(MotionEvent.EVENT_DOWN)</strong>;这样，<strong>intercepterTouchEvent()</strong>会被重新调用，重新寻找处理事件的句柄。具体实践可参考 XRefreshLayout 源码</p>
+<p><strong>CoordinateLayout</strong>,     <strong>NestedScrollView</strong>,     <strong>RecyclerView</strong></p>
+<p><strong>activity 是如何接收到事件的？</strong></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/" data-id="ciue6sye50001zoo1eepxcpnh" class="article-share-link">Share</a>
+      <a data-url="https://xinyujauchou.github.io/2016/10/17/Android-event-dispatch/" data-id="ciue81ued0001wgo1b7p7a6lb" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-event/">android  event</a></li></ul>
@@ -160,7 +202,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-event/">android  event</a></li></ul>
     </div>
@@ -170,7 +212,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/android-event/" style="font-size: 10px;">android  event</a>
     </div>
@@ -189,7 +231,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -214,7 +256,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
