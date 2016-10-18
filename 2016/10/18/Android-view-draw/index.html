@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="随便聊聊,聊聊生活，聊聊技术">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="UU&#39;F.超" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android中View绘制流程（PPT版）｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="https://xinyujauchou.github.io/2016/10/18/Android-view-draw/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    UU&#39;F.超
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android中View绘制流程（PPT版）</h1>
+                    
+                    <span class="meta">
+                         作者 Chandler
+                        <span>
+                          日期 2016-10-18
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#android view draw"
+                           title="android view draw">android view draw</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android中View绘制流程（PPT版）
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="你敢画我就敢展示的窗口-Window"><a href="#你敢画我就敢展示的窗口-Window" class="headerlink" title="你敢画我就敢展示的窗口(Window)"></a>你敢画我就敢展示的窗口(Window)</h2><h3 id="绘制篇之WINDOW"><a href="#绘制篇之WINDOW" class="headerlink" title="绘制篇之WINDOW"></a>绘制篇之WINDOW</h3><p>窗口是抽象的概念，窗口无处不在: Activity、Dialog、ContextMenu等</p>
+<a id="more"></a>
+<p><strong>窗口类型：</strong>  </p>
+<ul>
+<li>应用级别 0~99;  </li>
+<li>子窗口级别 1000~1999;  </li>
+<li>系统级别 2000~2999`  </li>
+</ul>
+<p>系统会按照级别进行纵深显示级别不同优先级以及相关权限 token要求也不同.</p>
+<p><strong><em>PS:Dialog窗口级别其实属于应用级别，不可以手动把Dialog的层级属性设置为子窗口级别</em></strong></p>
+<p>窗口通过WindowManager进行激活和移除。</p>
+<h2 id="乐忠于统一着装的人事-DecorderView"><a href="#乐忠于统一着装的人事-DecorderView" class="headerlink" title="乐忠于统一着装的人事(DecorderView)"></a>乐忠于统一着装的人事(DecorderView)</h2><h3 id="绘制篇之DecorderView"><a href="#绘制篇之DecorderView" class="headerlink" title="绘制篇之DecorderView"></a>绘制篇之DecorderView</h3><p>顾名思义：装饰类，它所做的工作也大致如此。装饰着我们每一个窗口视图，Activity（背景、ActionBar、各种flag对应的装饰）、Dialog</p>
+<p><strong>DecorderView：</strong></p>
+<ul>
+<li>类型：FrameLayout;</li>
+<li>布局层级：最顶层,viewRootImpl的直接操纵对象;</li>
+<li>创建时机：Activity的setContentView();</li>
+<li>添加时机：Activity的 onResume()之后，viewRootImpl创建之时</li>
+</ul>
+<p><em>由于其功能的特殊性：描述窗口的视图。因此其被定义为PhoneWindow的内部类，比较好理解。</em></p>
+<h2 id="掌控一切的视图控制器-ViewRootImpl"><a href="#掌控一切的视图控制器-ViewRootImpl" class="headerlink" title="掌控一切的视图控制器(ViewRootImpl)"></a>掌控一切的视图控制器(ViewRootImpl)</h2><h3 id="绘制篇之ViewRootImpl（一）"><a href="#绘制篇之ViewRootImpl（一）" class="headerlink" title="绘制篇之ViewRootImpl（一）"></a>绘制篇之ViewRootImpl（一）</h3><p>每个Activity对应一个窗口，同样每个Activity对应一个viewRootImpl,相比较前者，后者对于activity的意义也非同小可，<strong>没有它，绘制工作寸步难行</strong>。</p>
+<p><strong>ViewRootImpl功能:</strong></p>
+<ul>
+<li>通过binder与WMS通信,请求渲染;</li>
+<li>负责测量-布局-绘制工作的发起与协调;</li>
+<li>窗口事件的分发，组装AttachInfo给各个子View;</li>
+<li>Handler事件统一接收，内建有MainLooper的Handler</li>
+</ul>
+<p><strong><em>ViewRootImpl的创建：窗口激活之前，Activity的onResume()回调之后</em></strong></p>
+<h3 id="绘制篇之ViewRootImpl（二）"><a href="#绘制篇之ViewRootImpl（二）" class="headerlink" title="绘制篇之ViewRootImpl（二）"></a>绘制篇之ViewRootImpl（二）</h3><p>封装AttachedInfo并逐层传递给各个View，内建Handler,并维护临时消息队列（在View被Attach之前），之后会通过Handler统一添加到MainLooper。</p>
+<blockquote>
+<p>host.dispatchAttachedToWindow(mAttachInfo, 0) host实际上是DecorderView</p>
+</blockquote>
+<p><strong>mAttachInfo作用：</strong></p>
+<ul>
+<li>作为view是否依附于窗口的依据；</li>
+<li>请求重新布局 requestLayout(View view)；</li>
+<li>使用内建Handler派发消息或者使用临时消息队列；</li>
+<li>获取一系列信息:窗口、decorderview、位置等等；</li>
+<li>. . . . . .</li>
+</ul>
+<h3 id="绘制篇之ViewRootImpl-之onMeasure-一"><a href="#绘制篇之ViewRootImpl-之onMeasure-一" class="headerlink" title="绘制篇之ViewRootImpl 之onMeasure(一)"></a>绘制篇之ViewRootImpl 之onMeasure(一)</h3><p>Android的Client渲染流程 <code>measure()--&gt;layout()--&gt;draw()</code>这三者的调用都是由ViewRootImpl周期性得调用，而我们一般应用开发中只需要覆写相对应的<code>onMeasure()、 onLayout() 和onDraw()</code></p>
+<p><code>measure(int arg1, int arg2)</code>  arg1和arg2 分别表示父类所分配的<strong>宽度信息</strong> 以及 <strong>高度信息</strong></p>
+<p>之所以是说信息，是因为他们<strong>并非十进制参数</strong>,而<strong>是16进制参数</strong>,是由<code>MeasureSpec</code>构造<br><code>MeasureSpec</code>构造16进制表示<code>Mode</code>和<code>Size</code>两个信息，<code>Mode</code>如下：</p>
+<p><code>0x3  0011    0011  0000 0000 0000 0000 0000 0000 0000 00</code>     <strong>MODE_MASK</strong><br><code>0    0000  0000  0000 0000 0000 0000 0000 0000 0000 00</code>   <strong>UNSPECIFIED</strong><br><code>1    0001    0001  0000 0000 0000 0000 0000 0000 0000 00</code>     <strong>EXACTLY  </strong><br><code>2    0010    0010  0000 0000 0000 0000 0000 0000 0000 00</code>    <strong> AT_MOST</strong></p>
+<pre><code>位移30位是为了避免数字过小导致干扰  mode  位的判断，int型最大也就2的32次方？
+</code></pre><p><strong>举个栗子getMode()：</strong></p>
+<blockquote>
+<p>0011 0000 0000 0000 0000 0000 0000 0000 00<br>0001 0000 0000 0000 0000 0000 0000 0000 00<br>得到：<br>0001 0000 0000 0000 0000 0000 0000 0000 00     EXACTLY</p>
+</blockquote>
+<p><strong>getSize()  </strong> </p>
+<blockquote>
+<p>1100 1111 1111 1111 1111 1111 1111 1111 11<br>                    &amp;<br>0000 0000 0000 0000 0000 0000 0001 1111 11<br>0000 0000 0000 0000 0000 0000 0001 1111 11<br>64 + 32 + 16 + 8 + 4 + 2 + 1 = 127</p>
+</blockquote>
+<p><strong><em>android中就是通过此16进制进行测量信息的存储，系统会综合判断Mode、Size以及ViewGroup规则等因素来进行View尺寸的测量。</em></strong></p>
+<h3 id="绘制篇之ViewRootImpl-之onMeasure-3"><a href="#绘制篇之ViewRootImpl-之onMeasure-3" class="headerlink" title="绘制篇之ViewRootImpl 之onMeasure(3)"></a>绘制篇之ViewRootImpl 之onMeasure(3)</h3><p><strong>再举个栗子：</strong></p>
+<blockquote>
+<p>TextView的onMeasure()<br>int widthMode = MeasureSpec.getMode(widthMeasureSpec);<br>int heightMode = MeasureSpec.getMode(heightMeasureSpec);<br>int widthSize = MeasureSpec.getSize(widthMeasureSpec);<br>int heightSize = MeasureSpec.getSize(heightMeasureSpec); </p>
+</blockquote>
+<p>开头首先获取父控件给予的尺寸信息,接着定义自己的 int width; int height;<br> 紧接着根据父控件的模式、自己的padding，lineHeight,textSize等计算出高度 如：<strong>height = mPaint.getMeasureMetric().height + mpaddingTop + mPaddingBottom + lineNum</strong>相关设置 得出最终高度。</p>
+<p>最后调用 父类<strong>setMeasuredDimension(width, height)</strong> 设置并存储宽高<br><code>getMeasuredWidth()</code>获取的宽度便由此而来.</p>
+<h3 id="绘制篇之ViewRootImpl-之onLayout"><a href="#绘制篇之ViewRootImpl-之onLayout" class="headerlink" title="绘制篇之ViewRootImpl 之onLayout"></a>绘制篇之ViewRootImpl 之onLayout</h3><p>onLayout()在三大流程中比较复杂，主要是因为ViewGroup万般变化,万般规则,这些规则大都是在onLayout()体现的,比如相对布局,必须要解析出所有Child的规则,margin参数，最后才能布局,设置位置信息（<strong>这一步需要依赖上一步onMeasure()</strong>的测量信息）<br><code>onLayout(boolean changed, int l, int t, int r, int b)</code>这是onLayout的全参形式</p>
+<p><strong>以LinearLayout的onMeasure为例:</strong></p>
+<blockquote>
+<p>if (mOrientation == VERTICAL) {<br>layoutVertical(l, t, r, b);<br>} else {<br>layoutHorizontal(l, t, r, b);<br>}</p>
+</blockquote>
+<p>规则不同,所采用的布局策略也不同。<br>比如layoutVertical(l, t, r, b);(int, int), 它里面只要维护 childTop这个变量,最终得出每个Child的位置信息：child.layout(left, top, left + width, top + height);<br>此时getWidth()的值产生了。<br>我们平时使用的getLeft() getRight()也是在此时得到的</p>
+<h3 id="绘制篇之ViewRootImpl-之onDraw"><a href="#绘制篇之ViewRootImpl-之onDraw" class="headerlink" title="绘制篇之ViewRootImpl 之onDraw"></a>绘制篇之ViewRootImpl 之onDraw</h3><p><strong>onMeasure(Canvas canvas)</strong>方法再三大流程中是最具可能性的,注意：绘制流程只能在UI线程，如果在子线程可以使用<strong>postInvalidate()</strong>触发绘制，如果想使用多线程绘制，可以考虑采用<strong>SurfaceView</strong> 他可看做是View的加强版。</p>
+<p>onMeasure()并不是在View中唯一可绘制的方法，在它之前，View会进行 背景绘制-&gt;阴影绘制 然后才是onDraw() 再它之后还会有 <strong>dispatchDraw()</strong>子View的绘制 和 scrollBar的绘制。<br><code>onMeasure(Canvas canvas)</code>中的画布,和其它平台的画布无异，涉及到画笔(Paint)、Cancas API、PorterDuffXfermode(混合模式). . .  示例代码：</p>
+<blockquote>
+<p>canvas.drawARGB(255, 139, 197, 186);<br>int canvasWidth = getMeasuredWidth();  int r = canvasWidth / 3;<br>paint.setColor(0xFFFFCC44);   canvas.drawCircle(r, r, r, paint);<br>paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));<br>paint.setColor(0xFF66AAFF);<br>canvas.drawRect(r, r, r <em> 2.7f, r </em> 2.7f, paint);<br>paint.setXfermode(null); </p>
+</blockquote>
+<h3 id="绘制篇之流线图"><a href="#绘制篇之流线图" class="headerlink" title="绘制篇之流线图"></a>绘制篇之流线图</h3><p><strong>从上面的流线图可得知:</strong>  </p>
+<ul>
+<li>fragemnt中不可在全局变量定义时使用宿主上下文;  </li>
+<li>不可在onCreate()、onResume()方法中获取控件宽高(除非用ViewRootImpl的内建Handler发送请求);                                             </li>
+<li>onAttachedToWindow() 方法是获取控件信息的最佳时机.</li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/10/17/hello-world/" data-toggle="tooltip" data-placement="top"
+                           title="Hello World">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#你敢画我就敢展示的窗口-Window"><span class="toc-text">你敢画我就敢展示的窗口(Window)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之WINDOW"><span class="toc-text">绘制篇之WINDOW</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#乐忠于统一着装的人事-DecorderView"><span class="toc-text">乐忠于统一着装的人事(DecorderView)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之DecorderView"><span class="toc-text">绘制篇之DecorderView</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#掌控一切的视图控制器-ViewRootImpl"><span class="toc-text">掌控一切的视图控制器(ViewRootImpl)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之ViewRootImpl（一）"><span class="toc-text">绘制篇之ViewRootImpl（一）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之ViewRootImpl（二）"><span class="toc-text">绘制篇之ViewRootImpl（二）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之ViewRootImpl-之onMeasure-一"><span class="toc-text">绘制篇之ViewRootImpl 之onMeasure(一)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之ViewRootImpl-之onMeasure-3"><span class="toc-text">绘制篇之ViewRootImpl 之onMeasure(3)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之ViewRootImpl-之onLayout"><span class="toc-text">绘制篇之ViewRootImpl 之onLayout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之ViewRootImpl-之onDraw"><span class="toc-text">绘制篇之ViewRootImpl 之onDraw</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘制篇之流线图"><span class="toc-text">绘制篇之流线图</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; UU&#39;F.超 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://xinyujauchou.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="undefined">
+</body>
+
+</html>
